@@ -14,16 +14,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
     @Column(unique = true)
     private String email;
-
     private String phone;
-
     private LocalDate birthDate;
-
     private String password;
 
     @OneToMany(mappedBy = "client")
@@ -87,13 +83,26 @@ public class User implements UserDetails {
         this.birthDate = birthDate;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean hasRole(String roleName) {
+        for (Role role : roles) {
+            if (role.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     @Override
@@ -121,9 +130,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 
     public List<Order> getOrders() {
@@ -135,17 +141,7 @@ public class User implements UserDetails {
     }
 
     public void addRole(Role role) {
-
         roles.add(role);
-    }
-
-    public boolean hasRole(String roleName) {
-        for (Role role : roles) {
-            if (role.getAuthority().equals(roleName)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -161,4 +157,6 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+
 }
