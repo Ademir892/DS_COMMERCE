@@ -3,7 +3,6 @@ package com.devsuperior.dscommerce.dto;
 public class FieldMessage {
 
     private String filedName;
-
     private String message;
 
 
@@ -12,7 +11,7 @@ public class FieldMessage {
         this.message = message;
     }
 
-    public String getFiledName() {
+    public String getFieldName() {
         return filedName;
     }
 
